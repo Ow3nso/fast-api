@@ -1,0 +1,21 @@
+from unittest.mock import Base
+from fastapi import FastAPI
+from fastapi.params import Body
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Post(BaseModel):
+    title: str
+    content: str
+    published: bool = True
+
+@app.get('/')
+async def root():
+    return{"mesage": "Hello world"}
+
+@app.post("/createposts")
+async def create_posts(post: Post):
+    print(post)
+    print(post.dict())
+    return{"data": "post"}
